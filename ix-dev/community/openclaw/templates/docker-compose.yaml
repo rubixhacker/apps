@@ -45,7 +45,7 @@
 {% endif %}
 
 {# Command #}
-{% do app.set_command(["node", "dist/index.js", "gateway", "--bind", "0.0.0.0", "--port", "18789"]) %}
+{% do app.set_command(["node", "openclaw.mjs", "gateway", "--allow-unconfigured", "--bind", "0.0.0.0", "--port", values.network.gateway_port.port_number | string]) %}
 
 {# Portals #}
 {% do tpl.portals.add(values.network.gateway_port) %}
