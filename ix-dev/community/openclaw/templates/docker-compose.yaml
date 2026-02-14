@@ -14,6 +14,9 @@
 {% if values.openclaw.anthropic_api_key %}
   {% do app.environment.add_env("ANTHROPIC_API_KEY", values.openclaw.anthropic_api_key) %}
 {% endif %}
+{% if values.openclaw.gemini_api_key %}
+  {% do app.environment.add_env("GEMINI_API_KEY", values.openclaw.gemini_api_key) %}
+{% endif %}
 
 {# LLM Configuration #}
 {% if values.llm.ollama_base_url %}
