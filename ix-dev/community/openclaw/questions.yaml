@@ -1,0 +1,192 @@
+groups:
+  - name: OpenClaw Configuration
+    description: Configure OpenClaw Settings
+  - name: Network Configuration
+    description: Configure Network for OpenClaw
+  - name: Storage Configuration
+    description: Configure Storage for OpenClaw
+  - name: Resources Configuration
+    description: Configure Resources for OpenClaw
+
+questions:
+  - variable: openclaw
+    label: ""
+    group: OpenClaw Configuration
+    schema:
+      type: dict
+      attrs:
+        - variable: gateway_token
+          label: Gateway Token
+          description: "OPENCLAW_GATEWAY_TOKEN"
+          schema:
+            type: string
+            private: true
+            required: true
+        - variable: claude_ai_session_key
+          label: Claude AI Session Key
+          description: "CLAUDE_AI_SESSION_KEY"
+          schema:
+            type: string
+            private: true
+            default: ""
+        - variable: claude_web_session_key
+          label: Claude Web Session Key
+          description: "CLAUDE_WEB_SESSION_KEY"
+          schema:
+            type: string
+            private: true
+            default: ""
+        - variable: claude_web_cookie
+          label: Claude Web Cookie
+          description: "CLAUDE_WEB_COOKIE"
+          schema:
+            type: string
+            private: true
+            default: ""
+        - variable: additional_envs
+          label: Additional Environment Variables
+          schema:
+            type: list
+            default: []
+            items:
+              - variable: env
+                label: Environment Variable
+                schema:
+                  type: dict
+                  attrs:
+                    - variable: name
+                      label: Name
+                      schema:
+                        type: string
+                        required: true
+                    - variable: value
+                      label: Value
+                      schema:
+                        type: string
+
+  - variable: network
+    label: ""
+    group: Network Configuration
+    schema:
+      type: dict
+      attrs:
+        - variable: gateway_port
+          label: Gateway Port
+          schema:
+            type: dict
+            attrs:
+              - variable: bind_mode
+                label: Port Bind Mode
+                schema:
+                  type: string
+                  default: "published"
+                  enum:
+                    - value: "published"
+                      description: Publish port on the host
+                    - value: "exposed"
+                      description: Expose port internally
+                    - value: ""
+                      description: None
+              - variable: port_number
+                label: Port Number
+                schema:
+                  type: int
+                  default: 18789
+                  min: 1
+                  max: 65535
+                  required: true
+        - variable: bridge_port
+          label: Bridge Port
+          schema:
+            type: dict
+            attrs:
+              - variable: bind_mode
+                label: Port Bind Mode
+                schema:
+                  type: string
+                  default: "published"
+                  enum:
+                    - value: "published"
+                      description: Publish port on the host
+                    - value: "exposed"
+                      description: Expose port internally
+                    - value: ""
+                      description: None
+              - variable: port_number
+                label: Port Number
+                schema:
+                  type: int
+                  default: 18790
+                  min: 1
+                  max: 65535
+                  required: true
+
+  - variable: storage
+    label: ""
+    group: Storage Configuration
+    schema:
+      type: dict
+      attrs:
+        - variable: config
+          label: Config Storage
+          description: Stores OpenClaw configuration and workspace
+          schema:
+            type: dict
+            attrs:
+              - variable: type
+                label: Type
+                schema:
+                  type: string
+                  default: "ix_volume"
+                  enum:
+                    - value: "host_path"
+                      description: "Host Path"
+                    - value: "ix_volume"
+                      description: "TrueNAS Dataset"
+              - variable: ix_volume_config
+                label: Dataset Configuration
+                schema:
+                  type: dict
+                  show_if: [["type", "=", "ix_volume"]]
+                  attrs:
+                    - variable: dataset_name
+                      label: Dataset Name
+                      schema:
+                        type: string
+                        default: "config"
+                        required: true
+              - variable: host_path_config
+                label: Host Path Configuration
+                schema:
+                  type: dict
+                  show_if: [["type", "=", "host_path"]]
+                  attrs:
+                    - variable: path
+                      label: Host Path
+                      schema:
+                        type: hostpath
+                        required: true
+
+  - variable: resources
+    label: ""
+    group: Resources Configuration
+    schema:
+      type: dict
+      attrs:
+        - variable: limits
+          label: Limits
+          schema:
+            type: dict
+            attrs:
+              - variable: cpus
+                label: CPUs
+                schema:
+                  type: int
+                  default: 2
+                  required: true
+              - variable: memory
+                label: Memory (in MB)
+                schema:
+                  type: int
+                  default: 4096
+                  required: true

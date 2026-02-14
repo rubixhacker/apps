@@ -1,0 +1,33 @@
+app_version: 2026.2.13
+capabilities: []
+categories:
+  - ai
+  - productivity
+date_added: '2025-02-17'
+description: OpenClaw is a personal AI assistant you run on your own devices. It answers you on the channels you already use (WhatsApp, Telegram, Slack, etc).
+home: https://openclaw.ai/
+host_mounts: []
+icon: https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text.png
+keywords:
+  - ai
+  - assistant
+  - automation
+lib_version: 2.2.0
+lib_version_hash: ""
+maintainers:
+  - email: dev@truenas.com
+    name: truenas
+    url: https://www.truenas.com/
+name: openclaw
+run_as_context:
+  - description: OpenClaw runs as a non-root user.
+    gid: 568
+    group_name: apps
+    uid: 568
+    user_name: apps
+screenshots: []
+sources:
+  - https://github.com/openclaw/openclaw
+title: OpenClaw
+train: community
+version: 1.0.0

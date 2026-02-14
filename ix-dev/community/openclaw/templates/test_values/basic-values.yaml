@@ -1,0 +1,25 @@
+openclaw:
+  gateway_token: "testtoken"
+  claude_ai_session_key: ""
+  claude_web_session_key: ""
+  claude_web_cookie: ""
+  additional_envs: []
+
+network:
+  gateway_port:
+    bind_mode: published
+    port_number: 18789
+  bridge_port:
+    bind_mode: published
+    port_number: 18790
+
+storage:
+  config:
+    type: ix_volume
+    ix_volume_config:
+      dataset_name: config
+
+resources:
+  limits:
+    cpus: 2
+    memory: 4096

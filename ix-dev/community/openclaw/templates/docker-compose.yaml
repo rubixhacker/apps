@@ -1,0 +1,38 @@
+{% set tpl = ix_lib.base.render.Render(values) %}
+
+{% set app = tpl.add_container(values.consts.openclaw_container_name, "image") %}
+{% do app.set_user(568, 568) %}
+{% do app.set_init(true) %}
+
+{# Environment Variables #}
+{% do app.environment.add_env("HOME", "/home/node/.openclaw") %}
+{% do app.environment.add_env("OPENCLAW_GATEWAY_BIND", "0.0.0.0") %}
+{% do app.environment.add_env("OPENCLAW_GATEWAY_TOKEN", values.openclaw.gateway_token) %}
+{% do app.environment.add_env("CLAUDE_AI_SESSION_KEY", values.openclaw.claude_ai_session_key) %}
+{% do app.environment.add_env("CLAUDE_WEB_SESSION_KEY", values.openclaw.claude_web_session_key) %}
+{% do app.environment.add_env("CLAUDE_WEB_COOKIE", values.openclaw.claude_web_cookie) %}
+{% do app.environment.add_user_envs(values.openclaw.additional_envs) %}
+
+{# Ports #}
+{% do app.add_port(values.network.gateway_port) %}
+{% do app.add_port(values.network.bridge_port) %}
+
+{# Storage #}
+{% do app.add_storage("/home/node/.openclaw", values.storage.config) %}
+
+{# Permissions #}
+{% set perms = tpl.deps.perms(values.consts.perms_container_name) %}
+{% do perms.add_or_skip_action("config", values.storage.config, {"uid": 568, "gid": 568, "mode": "check"}) %}
+
+{% if perms.has_actions() %}
+  {% do perms.activate() %}
+  {% do app.depends.add_dependency(values.consts.perms_container_name, "service_completed_successfully") %}
+{% endif %}
+
+{# Command #}
+{% do app.set_command(["node", "dist/index.js", "gateway", "--bind", "0.0.0.0", "--port", "18789"]) %}
+
+{# Portals #}
+{% do tpl.portals.add(values.network.gateway_port) %}
+
+{{ tpl.render() | tojson }}

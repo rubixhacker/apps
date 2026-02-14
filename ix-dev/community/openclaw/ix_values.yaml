@@ -1,0 +1,8 @@
+images:
+  image:
+    repository: moltbot/moltbot
+    tag: 2026.2.13
+
+consts:
+  openclaw_container_name: openclaw
+  perms_container_name: permissions
