@@ -11,9 +11,9 @@
 {% do app.environment.add_env("HOME", "/home/node/.openclaw") %}
 {% do app.environment.add_env("OPENCLAW_GATEWAY_BIND", "0.0.0.0") %}
 {% do app.environment.add_env("OPENCLAW_GATEWAY_TOKEN", values.openclaw.gateway_token) %}
-{% do app.environment.add_env("CLAUDE_AI_SESSION_KEY", values.openclaw.claude_ai_session_key) %}
-{% do app.environment.add_env("CLAUDE_WEB_SESSION_KEY", values.openclaw.claude_web_session_key) %}
-{% do app.environment.add_env("CLAUDE_WEB_COOKIE", values.openclaw.claude_web_cookie) %}
+{% if values.openclaw.anthropic_api_key %}
+  {% do app.environment.add_env("ANTHROPIC_API_KEY", values.openclaw.anthropic_api_key) %}
+{% endif %}
 
 {# LLM Configuration #}
 {% if values.llm.ollama_base_url %}

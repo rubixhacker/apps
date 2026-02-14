@@ -1,8 +1,6 @@
 openclaw:
   gateway_token: "testtoken"
-  claude_ai_session_key: ""
-  claude_web_session_key: ""
-  claude_web_cookie: ""
+  anthropic_api_key: ""
   additional_envs: []
 
 llm:

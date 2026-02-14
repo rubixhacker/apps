@@ -24,23 +24,9 @@ questions:
             type: string
             private: true
             required: true
-        - variable: claude_ai_session_key
-          label: Claude AI Session Key
-          description: "CLAUDE_AI_SESSION_KEY"
-          schema:
-            type: string
-            private: true
-            default: ""
-        - variable: claude_web_session_key
-          label: Claude Web Session Key
-          description: "CLAUDE_WEB_SESSION_KEY"
-          schema:
-            type: string
-            private: true
-            default: ""
-        - variable: claude_web_cookie
-          label: Claude Web Cookie
-          description: "CLAUDE_WEB_COOKIE"
+        - variable: anthropic_api_key
+          label: Anthropic API Key
+          description: "API key from https://console.anthropic.com/"
           schema:
             type: string
             private: true
