@@ -11,6 +11,18 @@
 {% do app.environment.add_env("CLAUDE_AI_SESSION_KEY", values.openclaw.claude_ai_session_key) %}
 {% do app.environment.add_env("CLAUDE_WEB_SESSION_KEY", values.openclaw.claude_web_session_key) %}
 {% do app.environment.add_env("CLAUDE_WEB_COOKIE", values.openclaw.claude_web_cookie) %}
+
+{# LLM Configuration #}
+{% if values.llm.ollama_base_url %}
+  {% do app.environment.add_env("OLLAMA_BASE_URL", values.llm.ollama_base_url) %}
+{% endif %}
+{% if values.llm.openai_api_base %}
+  {% do app.environment.add_env("OPENAI_API_BASE", values.llm.openai_api_base) %}
+{% endif %}
+{% if values.llm.openai_api_key %}
+  {% do app.environment.add_env("OPENAI_API_KEY", values.llm.openai_api_key) %}
+{% endif %}
+
 {% do app.environment.add_user_envs(values.openclaw.additional_envs) %}
 
 {# Ports #}

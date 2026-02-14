@@ -5,6 +5,11 @@ openclaw:
   claude_web_cookie: ""
   additional_envs: []
 
+llm:
+  ollama_base_url: "http://192.168.1.100:11434"
+  openai_api_base: ""
+  openai_api_key: ""
+
 network:
   gateway_port:
     bind_mode: published
