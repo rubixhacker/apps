@@ -18,6 +18,9 @@ network:
     bind_mode: published
     port_number: 18790
 
+ix_volumes:
+  config: "/mnt/tank/apps/openclaw/config"
+
 storage:
   config:
     type: ix_volume
