@@ -19,13 +19,14 @@ network:
     port_number: 18790
 
 ix_volumes:
-  config: "/mnt/tank/apps/openclaw/config"
+  config: /opt/tests/mnt/config
 
 storage:
   config:
     type: ix_volume
     ix_volume_config:
       dataset_name: config
+      create_host_path: true
 
 resources:
   limits:
