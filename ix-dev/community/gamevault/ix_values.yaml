@@ -1,0 +1,14 @@
+images:
+  gamevault_image:
+    repository: phalcode/gamevault-backend
+    tag: 16.2.0
+  postgres_image:
+    repository: postgres
+    tag: 17
+
+consts:
+  gamevault_container_name: gamevault
+  postgres_container_name: gamevault-db
+  perms_container_name: gamevault-perms
+  db_user: gamevault
+  db_name: gamevault

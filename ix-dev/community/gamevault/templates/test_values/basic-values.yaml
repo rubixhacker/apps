@@ -1,0 +1,41 @@
+resources:
+  limits:
+    cpus: 2.0
+    memory: 4096
+
+gamevault:
+  admin_username: admin
+  db_password: secret
+  additional_envs: []
+
+run_as:
+  user: 568
+  group: 568
+
+network:
+  web_port:
+    bind_mode: published
+    port_number: 8082
+
+ix_volumes:
+  postgres_data: /opt/tests/mnt/gamevault/postgres_data
+  games: /opt/tests/mnt/gamevault/games
+  media: /opt/tests/mnt/gamevault/media
+
+storage:
+  postgres_data:
+    type: ix_volume
+    ix_volume_config:
+      dataset_name: postgres_data
+      create_host_path: true
+  files_storage:
+    type: ix_volume
+    ix_volume_config:
+      dataset_name: games
+      create_host_path: true
+  media_storage:
+    type: ix_volume
+    ix_volume_config:
+      dataset_name: media
+      create_host_path: true
+  additional_storage: []
