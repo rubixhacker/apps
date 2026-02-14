@@ -4,6 +4,9 @@
 {% do app.set_user(568, 568) %}
 {% do app.set_init(true) %}
 
+{# Healthcheck #}
+{% do app.healthcheck.set_test("curl", {"port": values.network.gateway_port.port_number, "path": "/"}) %}
+
 {# Environment Variables #}
 {% do app.environment.add_env("HOME", "/home/node/.openclaw") %}
 {% do app.environment.add_env("OPENCLAW_GATEWAY_BIND", "0.0.0.0") %}
