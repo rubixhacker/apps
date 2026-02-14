@@ -1,0 +1,14 @@
+images:
+  api_image:
+    repository: 1password/connect-api
+    tag: 1.8.1
+  sync_image:
+    repository: 1password/connect-sync
+    tag: 1.8.1
+
+consts:
+  api_container_name: connect-api
+  sync_container_name: connect-sync
+  credentials_file: /home/opuser/.op/1password-credentials.json
+  data_dir: /home/opuser/.op/data
+  bus_port: 11223

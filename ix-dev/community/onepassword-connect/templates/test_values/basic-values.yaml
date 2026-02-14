@@ -1,0 +1,20 @@
+onepassword:
+  credentials: "ewogICJ2ZXJzaW9uIjogIjEiLAogICJ1cmwiOiAiaHR0cHM6Ly9teS4xcGFzc3dvcmQuY29tIiwKICAiZW1haWwiOiAidGVzdEBleGFtcGxlLmNvbSIsCiAgInNlY3JldEtleSI6ICJBLTMt..."
+  log_level: info
+  sync_timeout: 10s
+
+network:
+  http_port:
+    port: 8080
+    bind_mode: published
+
+storage:
+  data:
+    type: ix_volume
+    ix_volume_config:
+      dataset_name: data
+
+resources:
+  limits:
+    cpus: 2
+    memory: 4096

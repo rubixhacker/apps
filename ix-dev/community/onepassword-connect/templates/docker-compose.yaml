@@ -1,0 +1,50 @@
+{# Initialize #}
+{% set tpl = ix_lib.base.render.Render(values) %}
+
+{# Define Connect API Container #}
+{# Resources are automatically applied from values.resources #}
+{% set api = tpl.add_container(values.consts.api_container_name, "api_image") %}
+{% do api.set_user(999, 999) %}
+{% do api.environment.add_env("OP_SESSION", values.onepassword.credentials) %}
+{% do api.environment.add_env("OP_LOG_LEVEL", values.onepassword.log_level) %}
+{% do api.environment.add_env("OP_SYNC_TIMEOUT", values.onepassword.sync_timeout) %}
+{% do api.environment.add_env("OP_HTTP_PORT", values.network.http_port.port) %}
+{% do api.environment.add_env("OP_BUS_PORT", values.consts.bus_port) %}
+{% do api.environment.add_env("OP_BUS_PEERS", values.consts.sync_container_name + ":" + values.consts.bus_port | string) %}
+
+{# Add ports #}
+{% do api.add_port(values.network.http_port) %}
+
+{# Add storage #}
+{% do api.add_storage(values.consts.data_dir, values.storage.data) %}
+
+{# Health check for API #}
+{% do api.healthcheck.set_test("curl", {"port": values.network.http_port.port, "path": "/health"}) %}
+
+{# Define Connect Sync Container #}
+{# Resources are automatically applied from values.resources #}
+{% set sync = tpl.add_container(values.consts.sync_container_name, "sync_image") %}
+{% do sync.set_user(999, 999) %}
+{% do sync.environment.add_env("OP_SESSION", values.onepassword.credentials) %}
+{% do sync.environment.add_env("OP_LOG_LEVEL", values.onepassword.log_level) %}
+{% do sync.environment.add_env("OP_HTTP_PORT", values.network.http_port.port) %}
+{% do sync.environment.add_env("OP_BUS_PORT", values.consts.bus_port) %}
+{% do sync.environment.add_env("OP_BUS_PEERS", values.consts.api_container_name + ":" + values.consts.bus_port | string) %}
+
+{# Add storage #}
+{% do sync.add_storage(values.consts.data_dir, values.storage.data) %}
+
+{# Configure Permissions #}
+{% set perms = tpl.deps.perms("perms") %}
+{% do perms.add_or_skip_action("data", values.storage.data, {"uid": 999, "gid": 999, "mode": "check"}) %}
+
+{% if perms.has_actions() %}
+  {% do perms.activate() %}
+  {% do api.depends.add_dependency("perms", "service_completed_successfully") %}
+  {% do sync.depends.add_dependency("perms", "service_completed_successfully") %}
+{% endif %}
+
+{# Portals #}
+{% do tpl.portals.add(values.network.http_port, scheme="http", path="/") %}
+
+{{ tpl.render() | tojson }}
