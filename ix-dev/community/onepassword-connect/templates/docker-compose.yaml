@@ -3,12 +3,12 @@
 
 {# Define Connect API Container #}
 {# Resources are automatically applied from values.resources #}
-{% set api = tpl.add_container(values.consts.api_container_name, "api_image") %}
+{% set api = tpl.add_container(values.consts.api_container_name, "image") %}
 {% do api.set_user(999, 999) %}
 {% do api.environment.add_env("OP_SESSION", values.onepassword.credentials) %}
 {% do api.environment.add_env("OP_LOG_LEVEL", values.onepassword.log_level) %}
 {% do api.environment.add_env("OP_SYNC_TIMEOUT", values.onepassword.sync_timeout) %}
-{% do api.environment.add_env("OP_HTTP_PORT", values.network.http_port.port) %}
+{% do api.environment.add_env("OP_HTTP_PORT", values.network.http_port.port_number) %}
 {% do api.environment.add_env("OP_BUS_PORT", values.consts.bus_port) %}
 {% do api.environment.add_env("OP_BUS_PEERS", values.consts.sync_container_name + ":" + values.consts.bus_port | string) %}
 
@@ -19,7 +19,7 @@
 {% do api.add_storage(values.consts.data_dir, values.storage.data) %}
 
 {# Health check for API #}
-{% do api.healthcheck.set_test("curl", {"port": values.network.http_port.port, "path": "/health"}) %}
+{% do api.healthcheck.set_test("curl", {"port": values.network.http_port.port_number, "path": "/health"}) %}
 
 {# Define Connect Sync Container #}
 {# Resources are automatically applied from values.resources #}
@@ -27,12 +27,15 @@
 {% do sync.set_user(999, 999) %}
 {% do sync.environment.add_env("OP_SESSION", values.onepassword.credentials) %}
 {% do sync.environment.add_env("OP_LOG_LEVEL", values.onepassword.log_level) %}
-{% do sync.environment.add_env("OP_HTTP_PORT", values.network.http_port.port) %}
+{% do sync.environment.add_env("OP_HTTP_PORT", values.network.http_port.port_number) %}
 {% do sync.environment.add_env("OP_BUS_PORT", values.consts.bus_port) %}
 {% do sync.environment.add_env("OP_BUS_PEERS", values.consts.api_container_name + ":" + values.consts.bus_port | string) %}
 
 {# Add storage #}
 {% do sync.add_storage(values.consts.data_dir, values.storage.data) %}
+
+{# Health check for Sync #}
+{% do sync.healthcheck.set_test("pgrep", {"process": "connect-sync"}) %}
 
 {# Configure Permissions #}
 {% set perms = tpl.deps.perms("perms") %}
@@ -45,6 +48,6 @@
 {% endif %}
 
 {# Portals #}
-{% do tpl.portals.add(values.network.http_port, scheme="http", path="/") %}
+{% do tpl.portals.add(values.network.http_port, {"scheme": "http"}) %}
 
 {{ tpl.render() | tojson }}

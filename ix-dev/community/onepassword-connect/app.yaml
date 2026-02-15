@@ -1,33 +1,39 @@
 app_version: 1.8.1
 capabilities: []
 categories:
-  - security
-  - tools
+- security
+changelog_url: https://github.com/1Password/connect/releases
 date_added: '2026-02-14'
-description: Securely access your 1Password items and vaults in your company's apps and cloud infrastructure.
+description: Securely access your 1Password items and vaults in your company's apps
+  and cloud infrastructure.
 home: https://developer.1password.com/docs/connect/
 host_mounts: []
 icon: https://media.sys.truenas.net/apps/onepassword-connect/icons/icon.png
 keywords:
-  - 1password
-  - secrets
-  - security
-lib_version: 2.2.0
-lib_version_hash: ""
+- 1password
+- secrets
+- security
+lib_version: 2.1.78
+lib_version_hash: ''
 maintainers:
-  - email: dev@ixsystems.com
-    name: truenas
-    url: https://www.ixsystems.com
+- email: dev@truenas.com
+  name: truenas
+  url: https://www.truenas.com/
 name: onepassword-connect
 run_as_context:
-  - description: 1Password Connect runs as opuser (999)
-    gid: 999
-    group_name: opuser
-    uid: 999
-    user_name: opuser
+- description: Container [connect-api] runs as non-root user and group.
+  gid: 999
+  group_name: Host group is [docker]
+  uid: 999
+  user_name: Host user is [netdata]
+- description: Container [connect-sync] runs as non-root user and group.
+  gid: 999
+  group_name: Host group is [docker]
+  uid: 999
+  user_name: Host user is [netdata]
 screenshots: []
 sources:
-  - https://github.com/1Password/connect
+- https://github.com/1Password/connect
 title: 1Password Connect
 train: community
-version: 1.0.0
+version: 1.0.1
