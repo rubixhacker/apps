@@ -18,8 +18,8 @@
 {# Add storage #}
 {% do api.add_storage(values.consts.data_dir, values.storage.data) %}
 
-{# Health check for API #}
-{% do api.healthcheck.set_test("http", {"port": values.network.http_port.port_number, "path": "/health"}) %}
+{# Disable healthcheck - image is scratch-based with no shell #}
+{% do api.healthcheck.disable() %}
 
 {# Define Connect Sync Container #}
 {# Resources are automatically applied from values.resources #}
@@ -34,8 +34,8 @@
 {# Add storage #}
 {% do sync.add_storage(values.consts.data_dir, values.storage.data) %}
 
-{# Health check for Sync #}
-{% do sync.healthcheck.set_test("tcp", {"port": values.consts.bus_port}) %}
+{# Disable healthcheck - image is scratch-based with no shell #}
+{% do sync.healthcheck.disable() %}
 
 {# Configure Permissions #}
 {% set perms = tpl.deps.perms("perms") %}
