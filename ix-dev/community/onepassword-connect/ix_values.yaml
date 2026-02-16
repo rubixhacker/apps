@@ -16,3 +16,6 @@ consts:
   home_dir: /home/opuser/
   data_dir: /home/opuser/.op/data
   bus_port: 11223
+
+  run_as_user: 999
+  run_as_group: 999
