@@ -31,7 +31,7 @@
 {# FIXME: https://github.com/1Password/connect/issues/63 #}
 {% do sync.healthcheck.disable() %}
 
-{% do api.add_port(values.network.http_port) %}
+{% do api.add_port(values.network.api_port) %}
 {% do sync.add_port(values.network.sync_port) %}
 
 {% do perm_container.add_or_skip_action("data", values.storage.data, perms_config) %}
