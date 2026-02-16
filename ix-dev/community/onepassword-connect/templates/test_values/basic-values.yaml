@@ -1,15 +1,21 @@
+resources:
+  limits:
+    cpus: 2
+    memory: 4096
+
 onepassword:
-  credentials: "eyJ2ZXJpZmljYXRpb25OdW1iZXIiOiIxIiwidXNlckF1dGgiOnsibWV0aG9kIjoiU1JQZy00MDk2IiwiYWxnIjoiUEJFUzJnLUhTMjU2IiwiaXRlcmF0aW9ucyI6MTAwMDAwLCJzYWx0IjoiQUFBQUFBQUFBQUFBQUFBQUFBQUFBQT09In0sInNlcnZlckF1dGgiOnsibWV0aG9kIjoiU1JQZy00MDk2IiwiYWxnIjoiUEJFUzJnLUhTMjU2IiwiaXRlcmF0aW9ucyI6MTAwMDAwLCJzYWx0IjoiQUFBQUFBQUFBQUFBQUFBQUFBQUFBQT09In0sInZlcnNpb24iOiIyIiwiYWNjb3VudFV1aWQiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBIiwidXJsIjoiaHR0cHM6Ly9teS4xcGFzc3dvcmQuY29tIn0K"
-  log_level: info
-  sync_timeout: 10s
+  credentials: credentials
 
 network:
-  http_port:
-    port_number: 8080
+  api_port:
+    port_number: 8081
+    bind_mode: published
+  sync_port:
+    port_number: 8082
     bind_mode: published
 
 ix_volumes:
-  data: /opt/tests/mnt/data
+  data: /opt/tests/mnt/onepassword-connect/data
 
 storage:
   data:
@@ -17,8 +23,3 @@ storage:
     ix_volume_config:
       dataset_name: data
       create_host_path: true
-
-resources:
-  limits:
-    cpus: 2
-    memory: 4096
