@@ -30,7 +30,7 @@ questions:
 
   - variable: network
     label: ""
-    group: Network
+    group: Network Configuration
     schema:
       type: dict
       attrs:
@@ -134,7 +134,7 @@ questions:
 
   - variable: storage
     label: ""
-    group: Storage
+    group: Storage Configuration
     schema:
       type: dict
       attrs:
@@ -409,7 +409,7 @@ questions:
                             description: sync
   - variable: resources
     label: ""
-    group: Resources
+    group: Resources Configuration
     schema:
       type: dict
       attrs:
